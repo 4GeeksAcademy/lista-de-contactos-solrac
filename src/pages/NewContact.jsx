@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ContactCard } from "./ContactCard";
 
 export const NewContact = () => {
     const [name, setName] = useState("")
@@ -9,52 +11,56 @@ export const NewContact = () => {
 
     return (
         <>
-            <div className="registration form">
-                <div className="tittle text-center display-1">
-                    <h1><strong>Add a new contact</strong></h1>
+            <div className="registration form container mt-5" style={{ width: "800px", height: "500px" }}>
+                <div className="tittle text-center display-1 m-5">
+                    <h1><strong>Añadir nuevo contacto</strong></h1>
                 </div>
                 <form>
-                    <label className="mb-2" htmlFor="fullname">Nombre y apellidos</label>
+                    <label className="form-label mb-2" htmlFor="fullname">Nombre y apellidos</label>
                     <input
-                        className="form-control"
+                        className="form-control mb-2"
                         id="fullname"
                         type="text"
                         placeholder="Nombre y apellidos completos"
                         onChange={(e) => { setName(e.target.value) }}
                         value={name}
+                        required
                     />
-                    <label className="mb-2" htmlFor="email">Email</label>
+                    <label className="form-label mb-2" htmlFor="email">Email</label>
                     <input
-                        className="form-control"
+                        className="form-control mb-2"
                         id="email"
                         type="email"
-                        placeholder="your email"
+                        placeholder="correo electrónico"
                         onChange={(e) => { setEmail(e.target.value) }}
-                        value={name}
+                        value={email}
+                        required
                     />
-                    <label className="mb-2" htmlFor="phone">Telefono</label>
+                    <label className="form-label mb-2" htmlFor="phone">Telefono</label>
                     <input
-                        className="form-control"
+                        className="form-control mb-2"
                         id="phone"
                         type="number"
-                        placeholder="Numero de telefono"
+                        placeholder="Número de teléfono"
                         onChange={(e) => { setPhone(e.target.value) }}
-                        value={name}
+                        value={phone}
+                        required
                     />
-                    <label className="mb-2" htmlFor="address">Dirección</label>
+                    <label className="form-label mb-2" htmlFor="address">Dirección</label>
                     <input
-                        className="form-control"
+                        className="form-control mb-2"
                         id="address"
                         type="text"
                         placeholder="Dirección"
                         onChange={(e) => { setAddress(e.target.value) }}
-                        value={name}
+                        value={address}
                     />
+                    <div className="d-flex justify-content-center m-3">
+                        <button className="btn btn-success">Guardar contacto</button>
+                    </div>
                 </form>
             </div>
+            <Link className="d-flex justify-content-center" to={ContactCard}>Volver a lista de contacto</Link>
         </>
     )
 };
-
-
-//Aqui va a ser el formulario para la creacion del contacto.
