@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ContactCard } from "./ContactCard";
+import storeReducer from "../store";
+import { create_contact } from "../service/serviceAPI";
 
 export const NewContact = () => {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [phone, setPhone] = useState("")
-    const [address, setAddress] = useState("")
 
+
+    const {store , dispatch} = storeReducer()
+
+    //crear la funcion submit para la carga de datos 
+    const hadlesubmit = (e) => {
+        e.preventDefault()
+        create_contact(store.contact, setContact, dispatch)
+    }
 
     return (
         <>
@@ -56,11 +62,13 @@ export const NewContact = () => {
                         value={address}
                     />
                     <div className="d-flex justify-content-center m-3">
-                        <button className="btn btn-success">Guardar contacto</button>
+                        <button className="btn btn-success" type="submit">Guardar contacto</button>
                     </div>
                 </form>
             </div>
-            <Link className="d-flex justify-content-center" to={ContactCard}>Volver a lista de contacto</Link>
+            <Link className="d-flex justify-content-center" to={"/contact_card"}>Volver a lista de contacto</Link>
         </>
     )
 };
+
+// falta la funcionalidad

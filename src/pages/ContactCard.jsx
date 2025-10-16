@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom"
 import { NewContact } from "./NewContact"
 
-export const ContactCard = () => {
 
+export const ContactCard = () => {
+    const navigate = useNavigate()
 
     return (
         <>
@@ -9,12 +11,12 @@ export const ContactCard = () => {
                 {/* {contactos.map(contacto=>( */}
                 <div className="card-contact container py-4">
                     <div className="d-flex justify-content-end">
-                        <button className="btn btn-success my-3" onClick={NewContact}>añadir contacto</button>
+                        <button className="btn btn-success my-3" onClick={()=> navigate("/new_contact")}>añadir contacto</button>
                     </div>
                     <div className="d-flex row border">
                         <div className="col-md-2 my-2">
                             <div className="ratio ratio-1x1">
-                                <img src="/src/assets/img/IMG_0903.JPG" className="rounded-circle" style={{backgroundPosition:"top", backgroundSize: "cover", backgroundRepeat: "no-repeat" }} />
+                                <img src="/src/assets/img/IMG_0903.JPG" className="rounded-circle" style={{backgroundPosition:"center", backgroundSize:"cover", backgroundRepeat: "no-repeat" }} />
                             </div>
                         </div>
                         <div className="col-md-9">
@@ -46,3 +48,5 @@ export const ContactCard = () => {
         </>
     )
 }
+
+              
