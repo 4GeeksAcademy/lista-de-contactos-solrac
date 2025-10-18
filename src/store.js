@@ -13,12 +13,6 @@ export const initialStore = () => {
     //     background: null,
     //   }
     // ],
-    contact: {
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-    },
     agenda: []
   }
 }

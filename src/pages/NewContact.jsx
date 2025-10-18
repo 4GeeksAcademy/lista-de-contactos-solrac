@@ -6,13 +6,19 @@ import { create_contact } from "../service/serviceAPI";
 
 export const NewContact = () => {
 
+    const [contact, setContact] = useState({
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+    });
 
     const {store , dispatch} = storeReducer()
 
     //crear la funcion submit para la carga de datos 
     const hadlesubmit = (e) => {
         e.preventDefault()
-        create_contact(store.contact, setContact, dispatch)
+        create_contact(contact, setContact, dispatch)
     }
 
     return (
@@ -21,15 +27,15 @@ export const NewContact = () => {
                 <div className="tittle text-center display-1 m-5">
                     <h1><strong>Añadir nuevo contacto</strong></h1>
                 </div>
-                <form>
+                <form onSubmit={hadlesubmit}>
                     <label className="form-label mb-2" htmlFor="fullname">Nombre y apellidos</label>
                     <input
                         className="form-control mb-2"
                         id="fullname"
                         type="text"
                         placeholder="Nombre y apellidos completos"
-                        onChange={(e) => { setName(e.target.value) }}
-                        value={name}
+                        onChange={(e) => { setContact.name(e.target.value) }}
+                        value={contact.name}
                         required
                     />
                     <label className="form-label mb-2" htmlFor="email">Email</label>
@@ -38,8 +44,8 @@ export const NewContact = () => {
                         id="email"
                         type="email"
                         placeholder="correo electrónico"
-                        onChange={(e) => { setEmail(e.target.value) }}
-                        value={email}
+                        onChange={(e) => { setContact.email(e.target.value) }}
+                        value={contact.email}
                         required
                     />
                     <label className="form-label mb-2" htmlFor="phone">Telefono</label>
@@ -48,8 +54,8 @@ export const NewContact = () => {
                         id="phone"
                         type="number"
                         placeholder="Número de teléfono"
-                        onChange={(e) => { setPhone(e.target.value) }}
-                        value={phone}
+                        onChange={(e) => { setContact.phone(e.target.value) }}
+                        value={contact.phone}
                         required
                     />
                     <label className="form-label mb-2" htmlFor="address">Dirección</label>

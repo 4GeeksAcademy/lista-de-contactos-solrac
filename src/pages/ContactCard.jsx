@@ -24,15 +24,15 @@ export const ContactCard = () => {
                                 <p>{"name"}</p>
                             </div>
                             <div className="d-flex m-1">
-                                <i class="fa-solid fa-location-dot"></i>
+                                <i className="fa-solid fa-location-dot"></i>
                                 <p className="mx-2">{"address"}</p>
                             </div>
                             <div className="d-flex m-1">
-                                <i class="fa-solid fa-phone"></i>
+                                <i className="fa-solid fa-phone"></i>
                                 <p className="mx-2">{"phone"}</p>
                             </div>
                             <div className="d-flex m-1">
-                                <i class="fa-solid fa-envelope"></i>
+                                <i className="fa-solid fa-envelope"></i>
                                 <p className="mx-2">{"email"}</p>
                             </div>
                         </div>
