@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ContactCard } from "./ContactCard";
 import storeReducer from "../store";
 import { create_contact } from "../service/serviceAPI";
 
 export const NewContact = () => {
 
+    const navigate = useNavigate()
     const [contact, setContact] = useState({
       name: "",
       email: "",
@@ -19,6 +20,8 @@ export const NewContact = () => {
     const hadlesubmit = (e) => {
         e.preventDefault()
         create_contact(contact, setContact, dispatch)
+        navigate("/contact_card")
+
     }
 
     return (

@@ -1,15 +1,15 @@
 export const create_agenda = async () => {
-    const response = await fetch(`https://playground.4geeks.com/contact/agendas/${slug}`, {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/noelia`, {
         method: "POST", headers: {
             "Content-type": "application/json"
         }, body: JSON.stringify()
     })
 
 
-    if(!response.ok){
-        return jsonify({status: response.status, msg: response.msg})
-    }else {
-        get_all_contact()
+    if (!response.ok) {
+        return jsonify({ status: response.status, msg: response.msg })
+    } else {
+        get_alls_agendas()
     }
 
 }
@@ -32,21 +32,37 @@ export const get_alls_agendas = async () => {
 //----------------------------------------------------------------------------------------------------------------------
 
 export const get_agenda = async () => {
-    const response = await fetch (`https://playground.4geeks.com/contact/agendas/${slug}`)
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos`)
+
+    const data = response.json()
+
+    if (response.ok) {
+        return data
+    } else {
+        console.log("No existe agenda")
+        create_agenda()
+    }
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-export const delete_agenda = async () => {
-    const response = await fetch (`https://playground.4geeks.com/contact/agendas/${slug}`,{ 
+export const delete_agenda = async (id) => {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos`, {
         method: "DELETE"
     })
 
+    if (response.ok) {
+        return jsonify({"msg": "Agenda eliminada con éxito." })
+    } else {
+        return jsonify({ status: response.status, msg: response.detail })
+
+    }
 
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 export const create_contact = async (contact, setContact, dispatch) => {
-    const response = await fetch(`https://playground.4geeks.com/contact/agendas/${slug}/contacts`, {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts`, {
         method: "POST",
         headers: {
             "Content-type": "application/json"
@@ -54,6 +70,7 @@ export const create_contact = async (contact, setContact, dispatch) => {
         body: JSON.stringify(contact)
     })
 
+    const data = response.json()
     if (response.ok) {
         get_list_user(dispatch)
     }
@@ -64,21 +81,27 @@ export const create_contact = async (contact, setContact, dispatch) => {
         phone: "",
         address: "",
     })
+
+    dispatch({type: "set_ContactoAgenda" , payload: data })
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-export const get_all_contact = async (dispatch) => {
-    const response = await fetch(`https://playground.4geeks.com/contact/agendas/${slug}/contacts`)
+export const get_list_user = async () => {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts`)
 
     const data = response.json()
 
     if (!response.ok) {
         console.log("No existe agenda ó contactos.");
-        create_agenda();
+        create_contact();
+    }else{
+        return data;
     }
 
-    dispatch({ type: "set_Agenda", payload: data })
+    
+
+    // dispatch({ type: "set_Agenda", payload: data })
 }
 
 
@@ -100,7 +123,15 @@ export const get_all_contact = async (dispatch) => {
 //----------------------------------------------------------------------------------------------------------------------
 
 export const delete_contact = async () => {
-     const response = await fetch (`https://playground.4geeks.com/contact/agendas/${slug}/contacts/${contact_id}`)
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts/1`)
+
+    const data = response.json()
+
+    if(response.ok){
+        return jsonify({"msg": "contacto eliminado."})
+    }else{
+        return jsonify({status: response.status, msg: data.msg})
+    }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
