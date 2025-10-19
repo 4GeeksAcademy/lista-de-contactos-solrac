@@ -1,17 +1,14 @@
 export const create_agenda = async () => {
-    const response = await fetch(`https://playground.4geeks.com/contact/agendas/noelia`, {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos`, {
         method: "POST", headers: {
             "Content-type": "application/json"
-        }, body: JSON.stringify()
+        }, body: JSON.stringify({ slug: "carlos" })
     })
 
-
     if (!response.ok) {
-        return jsonify({ status: response.status, msg: response.msg })
-    } else {
-        get_alls_agendas()
+        return { status: response.status, msg: response.statusText }
     }
-
+    await get_alls_agendas()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -19,30 +16,32 @@ export const create_agenda = async () => {
 export const get_alls_agendas = async () => {
     const response = await fetch("https://playground.4geeks.com/contact/agendas")
 
-    const data = response.json()
 
     if (!response.ok) {
-        console.log("There`s not agendas.")
-        create_agenda()
+        console.log("No hay agendas.")
+        await create_agenda()
+        return;
     }
+    const data = await response.json()
 
     return data;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-export const get_agenda = async () => {
+export const get_agenda = async (dispatch) => {
     const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos`)
 
-    const data = response.json()
 
-    if (response.ok) {
-        return data
-    } else {
+    if (!response.ok) {
         console.log("No existe agenda")
-        create_agenda()
+        await create_agenda()
+        return;
     }
 
+    const data = await response.json()
+
+    dispatch({ type: "set_Agenda", payload: data })
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -52,12 +51,10 @@ export const delete_agenda = async (id) => {
     })
 
     if (response.ok) {
-        return jsonify({"msg": "Agenda eliminada con éxito." })
+        return { "msg": "Agenda eliminada con éxito." }
     } else {
-        return jsonify({ status: response.status, msg: response.detail })
-
+        return { status: response.status, msg: response.detail }
     }
-
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -70,10 +67,15 @@ export const create_contact = async (contact, setContact, dispatch) => {
         body: JSON.stringify(contact)
     })
 
-    const data = response.json()
-    if (response.ok) {
-        get_list_user(dispatch)
+    if (!response.ok) {
+        console.log("No se pudo crear el contacto.")
+
+        return;
     }
+
+    const data = await response.json()
+
+    await get_list_user(dispatch)
 
     setContact({
         name: "",
@@ -82,26 +84,22 @@ export const create_contact = async (contact, setContact, dispatch) => {
         address: "",
     })
 
-    dispatch({type: "set_ContactoAgenda" , payload: data })
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-export const get_list_user = async () => {
+export const get_list_user = async (dispatch) => {
     const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts`)
-
-    const data = response.json()
 
     if (!response.ok) {
         console.log("No existe agenda ó contactos.");
-        create_contact();
-    }else{
-        return data;
+        // await create_contact(contact); //pendiente Error: await create_contact() sin argumentos → rompe.
+        return;
     }
 
-    
+    const data = await response.json()
 
-    // dispatch({ type: "set_Agenda", payload: data })
+    dispatch({ type: "set_ContactoAgenda", payload: data })
 }
 
 
@@ -122,70 +120,20 @@ export const get_list_user = async () => {
 // }
 //----------------------------------------------------------------------------------------------------------------------
 
-export const delete_contact = async () => {
-    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts/1`)
+export const delete_contact = async (id, dispatch) => {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts/${id}`, {
+        method: "DELETE"
+    });
 
-    const data = response.json()
-
-    if(response.ok){
-        return jsonify({"msg": "contacto eliminado."})
-    }else{
-        return jsonify({status: response.status, msg: data.msg})
+    if (!response.ok) {
+        const data = await response.json()
+        console.error("Error al eliminar contacto:", data.msg);
+        return { status: response.status, msg: data.msg };
     }
+    await get_list_user(dispatch);
+
+    return { msg: "Contacto eliminado correctamente." };
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------------------------------------------------
-
-// AGENDA OPERATIONS
-
-// GET TODAS LAS AGENDAS ("https://playground.4geeks.com/contact/agendas") OK
-
-// GET AGENDA UUNICA ("https://playground.4geeks.com/contact/agendas/carlos") OK
-
-
-// POST CREAR AGENDA ("https://playground.4geeks.com/contact/agendas/carlos") OK
-
-// {
-//   "slug": "carlos",
-//   "id": 1
-// }
-
-
-// DELETE AGENDA ("https://playground.4geeks.com/contact/agendas/carlos")
-
-//----------------------------------------------------------------------------------------------------------------------
-
-
-// CONTACT OPERATION
-
-// GET TODOS LOS CONTACTOS ("https://playground.4geeks.com/contact/agendas/carlos/contacts") OK
-
-
-// POST CREAR CONTACTO ("https://playground.4geeks.com/contact/agendas/carlos/contacts") OK
-
-// {
-//   "name": "string",
-//   "phone": "string",
-//   "email": "string",
-//   "address": "string"
-// }
-
-// PUT EDITAR CONTACTO ("https://playground.4geeks.com/contact/agendas/carlos/contacts/1") OK
-
-// requerido agenda de quien , id del contacto y 
-
-// {
-//   "name": "string",
-//   "phone": "string",
-//   "email": "string",
-//   "address": "string"
-// }
-
-
-// DELETE ELIMINAR CONTACTO ("https://playground.4geeks.com/contact/agendas/carlos/contacts/1")
-
-
-// requerido agenda de quien y id del contacto

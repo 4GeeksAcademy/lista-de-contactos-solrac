@@ -14,9 +14,7 @@ export const initialStore = () => {
     //   }
     // ],
     agenda: [],
-    contantoAgenda:{
-      
-    }
+    contactoAgenda:[]
   }
 }
 
@@ -40,7 +38,7 @@ export default function storeReducer(store, action = {}) {
     case 'set_ContactoAgenda':
       return  {
         ...store, 
-        contacto_agenda: action.payload
+        contactoAgenda: action.payload
       }
 
     default:

@@ -8,21 +8,28 @@ export const NewContact = () => {
 
     const navigate = useNavigate()
     const [contact, setContact] = useState({
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
     });
 
-    const {store , dispatch} = storeReducer()
 
-    //crear la funcion submit para la carga de datos 
-    const hadlesubmit = (e) => {
+    const { store, dispatch } = storeReducer()
+
+    const hadlesubmit = async (e) => {
         e.preventDefault()
-        create_contact(contact, setContact, dispatch)
+        await create_contact(contact, setContact, dispatch)
         navigate("/contact_card")
 
     }
+
+    const handleChange = (field, value) => {
+        setContact({
+            ...contact,
+            [field]: value
+        });
+    };
 
     return (
         <>
@@ -37,7 +44,7 @@ export const NewContact = () => {
                         id="fullname"
                         type="text"
                         placeholder="Nombre y apellidos completos"
-                        onChange={(e) => { setContact.name(e.target.value) }}
+                        onChange={(e) => handleChange("name", e.target.value)}
                         value={contact.name}
                         required
                     />
@@ -47,7 +54,7 @@ export const NewContact = () => {
                         id="email"
                         type="email"
                         placeholder="correo electrónico"
-                        onChange={(e) => { setContact.email(e.target.value) }}
+                        onChange={(e) => handleChange("email", e.target.value)}
                         value={contact.email}
                         required
                     />
@@ -57,7 +64,7 @@ export const NewContact = () => {
                         id="phone"
                         type="number"
                         placeholder="Número de teléfono"
-                        onChange={(e) => { setContact.phone(e.target.value) }}
+                        onChange={(e) => handleChange("phone", e.target.value)}
                         value={contact.phone}
                         required
                     />
@@ -67,8 +74,8 @@ export const NewContact = () => {
                         id="address"
                         type="text"
                         placeholder="Dirección"
-                        onChange={(e) => { setAddress(e.target.value) }}
-                        value={address}
+                        onChange={(e) => handleChange("address", e.target.value)}
+                        value={contact.address}
                     />
                     <div className="d-flex justify-content-center m-3">
                         <button className="btn btn-success" type="submit">Guardar contacto</button>
@@ -80,4 +87,4 @@ export const NewContact = () => {
     )
 };
 
-// falta la funcionalidad
+// Usamos una función handleChange para actualizar cualquier campo del contacto.
