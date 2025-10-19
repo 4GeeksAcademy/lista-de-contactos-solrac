@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ContactCard } from "./ContactCard";
 import storeReducer from "../store";
 import { create_contact } from "../service/serviceAPI";
 

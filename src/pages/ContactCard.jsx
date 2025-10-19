@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import storeReducer from "../store";
-import { get_list_user, delete_contact, get_agenda } from "../service/serviceAPI";
+import { get_list_user, delete_contact} from "../service/serviceAPI";
 
 export const ContactCard = () => {
     const navigate = useNavigate();
     const { store, dispatch } = storeReducer();
 
     useEffect(() => {
-        get_agenda(dispatch);
+        get_list_user(dispatch);
     }, []);
 
     const handleDelete = async (id) => {
