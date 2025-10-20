@@ -13,8 +13,8 @@ export const initialStore = () => {
     //     background: null,
     //   }
     // ],
-    agenda: [],
-    contactoAgenda:[]
+    // agenda: [],
+    contacts:[]
   }
 }
 
@@ -29,11 +29,11 @@ export default function storeReducer(store, action = {}) {
     //     todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
     //   };
 
-    case 'set_agenda':
-      return {...store, agenda: action.payload}
+    // case 'set_agenda':
+    //   return {...store, agenda: action.payload}
 
-    case 'set_contactoagenga':
-      return  {...store, contactoAgenda: action.payload}
+    case 'set_contactos':
+      return  {...store, contacts: action.payload}
 
     default:
       throw Error('Unknown action.');

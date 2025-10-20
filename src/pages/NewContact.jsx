@@ -6,6 +6,7 @@ import { create_contact } from "../service/serviceAPI";
 export const NewContact = () => {
 
     const navigate = useNavigate()
+
     const [contact, setContact] = useState({
         name: "",
         email: "",
