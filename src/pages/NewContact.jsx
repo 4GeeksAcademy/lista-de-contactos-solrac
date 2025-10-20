@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import storeReducer from "../store";
-import { create_contact } from "../service/serviceAPI";
+import { create_contact, get_list_user } from "../service/serviceAPI";
 
 export const NewContact = () => {
 
     const navigate = useNavigate()
+
+
 
     const [contact, setContact] = useState({
         name: "",
@@ -15,11 +17,17 @@ export const NewContact = () => {
     });
 
 
-    const { store, dispatch } = storeReducer()
+    // const { store, dispatch } = storeReducer()
 
     const hadlesubmit = async (e) => {
         e.preventDefault()
-        await create_contact(contact, setContact, dispatch)
+        await create_contact(contact)
+        setContact({
+            name: "",
+            email: "",
+            phone: "",
+            address: "",
+        })
         navigate("/contact_card")
 
     }
@@ -30,6 +38,7 @@ export const NewContact = () => {
             [field]: value
         });
     };
+
 
     return (
         <>

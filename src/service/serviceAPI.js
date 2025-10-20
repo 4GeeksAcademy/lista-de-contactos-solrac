@@ -1,9 +1,9 @@
-export const create_agenda = async (dispatch) => {
+export const create_agenda = async () => {
     const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos`, {
-        method: "POST", 
+        method: "POST",
         headers: {
             "Content-type": "application/json"
-        }, 
+        },
         body: JSON.stringify({ slug: "carlos" })
     })
 
@@ -11,7 +11,7 @@ export const create_agenda = async (dispatch) => {
         return { status: response.status, msg: response.statusText }
     }
 
-    await get_agenda(dispatch)
+    await get_agenda()
 }
 
 // //----------------------------------------------------------------------------------------------------------------------
@@ -34,23 +34,23 @@ export const create_agenda = async (dispatch) => {
 
 // //----------------------------------------------------------------------------------------------------------------------
 
-// export const get_agenda = async (dispatch) => {
+// export const get_agenda = async () => {
 //     const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos`)
 
 
 //     if (!response.ok) {
 //         console.log("No existe agenda")
-//         await create_agenda()
 //         return;
 //     }
 
 //     const data = await response.json()
+//     return data;
 
-//     dispatch({ type: "set_agenda", payload: data })
+//     // dispatch({ type: "set_agenda", payload: data })
 // // }
 
 // //----------------------------------------------------------------------------------------------------------------------
-export const delete_agenda = async (id) => {
+export const delete_agenda = async () => {
     const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos`, {
         method: "DELETE"
     })
@@ -76,7 +76,7 @@ export const delete_agenda = async (id) => {
 // //----------------------------------------------------------------------------------------------------------------------
 // //----------------------------------------------------------------------------------------------------------------------
 // //----------------------------------------------------------------------------------------------------------------------
-export const create_contact = async (contact, setContact, dispatch) => {
+export const create_contact = async (contact, setContact) => {
     const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts`, {
         method: "POST",
         headers: {
@@ -89,22 +89,14 @@ export const create_contact = async (contact, setContact, dispatch) => {
         console.log("No se pudo crear el contacto.")
 
         return;
-    }    
+    }
 
-    await get_list_user(dispatch)
-
-    setContact({
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-    })
-
+    await get_list_user()
 }
 
 // //----------------------------------------------------------------------------------------------------------------------
 
-export const get_list_user = async (dispatch) => {
+export const get_list_user = async () => {
 
     const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts`)
 
@@ -116,7 +108,9 @@ export const get_list_user = async (dispatch) => {
 
     const data = await response.json()
 
-    dispatch({ type: "set_contactos", payload: data })
+    return data;
+
+    // dispatch({ type: "set_contactos", payload: data })
 }
 
 

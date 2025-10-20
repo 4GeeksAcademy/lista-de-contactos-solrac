@@ -1,21 +1,26 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import storeReducer from "../store";
 import { get_list_user, delete_contact } from "../service/serviceAPI";
 
 export const ContactCard = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     // const { store, dispatch } = storeReducer();
 
-    // const handleDelete = async (id) => {
-    //     if (window.confirm("¿Estás seguro de eliminar este contacto?")) {
-    //         await delete_contact(id, dispatch);
-    //     }
-    // };
+    const [contacts, setContacts] = useState([])
 
-    // useEffect(() => {
-    //     get_list_user(dispatch);
-    // }, []);
+    const getContactsFromApi = async () => {
+        const contactsApi = await get_list_user()
+        setContacts(contactsApi)
+    }
+
+    const handleDelete = async (id) => {
+        await delete_contact(id);
+    };
+
+    useEffect(() => {
+        getContactsFromApi();
+    }, []);
 
     return (
         <>
@@ -26,8 +31,8 @@ export const ContactCard = () => {
                     </button>
                 </div>
 
-                {store.contacts && store.contacts.length > 0 ? (
-                    store.contacts.map((contacto) => (
+                {contacts && contacts.length > 0 ? (
+                    contacts.map((contacto) => (
                         <div className="card-contact container py-4 mb-3" key={contacto.id}>
                             <div className="d-flex row border">
                                 <div className="col-md-2 my-2">
