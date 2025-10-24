@@ -1,20 +1,6 @@
 export const initialStore = () => {
   return {
-    message: null,
-    todos: [
-      {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
-      }
-    ],
-    // agenda: [],
-    // contacts:[]
+    contacts:[]
   }
 }
 
@@ -32,8 +18,8 @@ export default function storeReducer(store, action = {}) {
     // case 'set_agenda':
     //   return {...store, agenda: action.payload};
 
-    // case 'set_contactos':
-    //   return  {...store, contacts: action.payload};
+    case 'set_contactos':
+      return  {...store, contacts: action.payload};
 
     default:
       throw Error('Unknown action.');

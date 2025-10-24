@@ -1,25 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import storeReducer from "../store";
-import { get_list_user, delete_contact } from "../service/serviceAPI";
+import { get_list_user } from "../service/serviceAPI";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const ContactCard = () => {
     const navigate = useNavigate();
-    // const { store, dispatch } = storeReducer();
+    const { store, dispatch } = useGlobalReducer()
 
-    const [contacts, setContacts] = useState([])
 
-    const getContactsFromApi = async () => {
-        const contactsApi = await get_list_user()
-        setContacts(contactsApi)
-    }
-
-    const handleDelete = async (id) => {
-        await delete_contact(id);
-    };
+    // const handleDelete = async (id) => {
+    //     await delete_contact(id);
+    // };
 
     useEffect(() => {
-        getContactsFromApi();
+        get_list_user(dispatch) //esta llamada a la API funciona correctamente.
     }, []);
 
     return (
@@ -31,9 +25,9 @@ export const ContactCard = () => {
                     </button>
                 </div>
 
-                {contacts && contacts.length > 0 ? (
-                    contacts.map((contacto) => (
-                        <div className="card-contact container py-4 mb-3" key={contacto.id}>
+                {store.contacts && store.contacts.length > 0 ? (
+                    store.contacts.map((contacto, index) => (
+                        <div className="card-contact container py-4 mb-3" key={index}>
                             <div className="d-flex row border">
                                 <div className="col-md-2 my-2">
                                     <div className="ratio ratio-1x1">
@@ -71,7 +65,7 @@ export const ContactCard = () => {
                                     </button>
                                     <button
                                         className="btn btn-border-none"
-                                        onClick={() => handleDelete(contacto.id)}
+                                        // onClick={() => handleDelete(contacto.id)}
                                     >
                                         <i className="fa-solid fa-trash-can"></i>
                                     </button>

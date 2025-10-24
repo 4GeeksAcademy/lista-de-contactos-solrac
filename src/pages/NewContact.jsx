@@ -1,40 +1,32 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import storeReducer from "../store";
-import { create_contact, get_list_user } from "../service/serviceAPI";
+import { create_contact } from "../service/serviceAPI";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const NewContact = () => {
 
     const navigate = useNavigate()
+    const {store , dispatch} = useGlobalReducer()
 
 
-
-    const [contact, setContact] = useState({
+    const [new_contact, setNew_Contact] = useState({
         name: "",
         email: "",
         phone: "",
         address: "",
     });
 
-
-    // const { store, dispatch } = storeReducer()
-
     const hadlesubmit = async (e) => {
         e.preventDefault()
-        await create_contact(contact)
-        setContact({
-            name: "",
-            email: "",
-            phone: "",
-            address: "",
-        })
+        await create_contact(new_contact, setNew_Contact, dispatch)
         navigate("/contact_card")
 
     }
 
+    // esta funcion modifica los valores en onchange
     const handleChange = (field, value) => {
-        setContact({
-            ...contact,
+        setNew_Contact({
+            ...new_contact,
             [field]: value
         });
     };
@@ -54,7 +46,7 @@ export const NewContact = () => {
                         type="text"
                         placeholder="Nombre y apellidos completos"
                         onChange={(e) => handleChange("name", e.target.value)}
-                        value={contact.name}
+                        value={new_contact.name}
                         required
                     />
                     <label className="form-label mb-2" htmlFor="email">Email</label>
@@ -64,7 +56,7 @@ export const NewContact = () => {
                         type="email"
                         placeholder="correo electrónico"
                         onChange={(e) => handleChange("email", e.target.value)}
-                        value={contact.email}
+                        value={new_contact.email}
                         required
                     />
                     <label className="form-label mb-2" htmlFor="phone">Telefono</label>
@@ -74,7 +66,7 @@ export const NewContact = () => {
                         type="number"
                         placeholder="Número de teléfono"
                         onChange={(e) => handleChange("phone", e.target.value)}
-                        value={contact.phone}
+                        value={new_contact.phone}
                         required
                     />
                     <label className="form-label mb-2" htmlFor="address">Dirección</label>
@@ -84,7 +76,7 @@ export const NewContact = () => {
                         type="text"
                         placeholder="Dirección"
                         onChange={(e) => handleChange("address", e.target.value)}
-                        value={contact.address}
+                        value={new_contact.address}
                     />
                     <div className="d-flex justify-content-center m-3">
                         <button className="btn btn-success" type="submit">Guardar contacto</button>
