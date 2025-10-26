@@ -44,25 +44,38 @@ export const get_list_user = async (dispatch) => {
     const data = await response.json()
     console.log(data) //con este console.log veo en consola la informacion de data.
     dispatch({ type: 'set_contactos', payload: data.contacts }) //payload: data.contacts porque store.contacts no es un array, sino un objeto ({ contacts: [...] }).
-// React no puede iterarlo, y no renderiza nada.
+    // React no puede iterarlo, y no renderiza nada.
 }
 
 //'set_contactos' me va a setear 
 // // //----------------------------------------------------------------------------------------------------------------------
 
-// export const edit_contact = async (contact, setContact, dispatch) => {
-//     const response = await fetch (`https://playground.4geeks.com/contact/agendas/${slug}/contacts/${contact_id}`),{
-//         method: "PUT",
-//         headers: {
-//             "Content-type": "application/json"
-//         },
-//         body: JSON.stringify(contact)
-//     })
+export const edit_contacts = async (id, new_contact, setNew_contact, dispatch) => {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(new_contact)
+    });
 
-//     if (response.ok) {
-//         get_list_user(dispatch)
-//     }
-// }
+    if (!response.ok) {
+        console.log("No es posible conectar con la API");
+        return;
+    }
+
+    if (response.ok) {
+        get_list_user(dispatch)
+    }
+    setNew_contact({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+    })
+
+
+}
 // // //----------------------------------------------------------------------------------------------------------------------
 
 export const delete_contact = async (id) => {

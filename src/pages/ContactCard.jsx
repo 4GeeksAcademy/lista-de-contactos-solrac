@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { delete_contact, get_list_user } from "../service/serviceAPI";
+import { delete_contact, edit_contacts, get_list_user } from "../service/serviceAPI";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const ContactCard = () => {
@@ -14,6 +14,11 @@ export const ContactCard = () => {
         if (!confirm("¿Seguro que deseas eliminar este contacto?")) return;
         await delete_contact(id);
     };
+
+    const handleEdit = async (id) =>{
+        await edit_contacts(id);
+        navigate("/edit_contact")
+    }
 
     useEffect(() => {
         get_list_user(dispatch) //esta llamada a la API funciona correctamente.
@@ -65,7 +70,10 @@ export const ContactCard = () => {
                                     </div>
                                 </div>
                                 <div className="col-md-1 d-block justify-content-end my-2">
-                                    <button className="btn btn-border-none me-2">
+                                    <button 
+                                    className="btn btn-border-none me-2"
+                                    onClick={()=> handleEdit(contacto.id)}
+                                    >
                                         <i className="align-item-start fa-solid fa-pen"></i>
                                     </button>
                                     <button
