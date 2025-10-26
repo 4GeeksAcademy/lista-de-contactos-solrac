@@ -16,8 +16,8 @@ export const ContactCard = () => {
     };
 
     const handleEdit = async (id) =>{
-        await edit_contacts(id);
-        navigate("/edit_contact")
+        // await edit_contacts(id);
+        navigate(`/edit_contact/${id}`)
     }
 
     useEffect(() => {

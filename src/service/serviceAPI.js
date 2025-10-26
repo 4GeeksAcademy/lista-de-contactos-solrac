@@ -59,8 +59,10 @@ export const edit_contacts = async (id, new_contact, setNew_contact, dispatch) =
         body: JSON.stringify(new_contact)
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-        console.log("No es posible conectar con la API");
+        console.log("No es posible conectar con la API", data.msg);
         return;
     }
 

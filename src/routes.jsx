@@ -30,7 +30,7 @@ export const router = createBrowserRouter(
       <Route path="/demo" element={<Demo />} />
       <Route path="/contact_card" element={<ContactCard />} />
       <Route path="/new_contact" element={<NewContact />} />
-      <Route path="/edit_contact" element={<EditContact />} />
-    </Route>
+      <Route path="/edit_contact/:contacto_id" element={<EditContact />} />
+          </Route>
   )
 );
