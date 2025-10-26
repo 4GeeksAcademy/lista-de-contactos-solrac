@@ -1,20 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { get_list_user } from "../service/serviceAPI";
+import { delete_contact, get_list_user } from "../service/serviceAPI";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const ContactCard = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const { store, dispatch } = useGlobalReducer()
 
 
-    // const handleDelete = async (id) => {
-    //     await delete_contact(id);
-    // };
+    const handleDelete = async (id) => {
+
+        if (!confirm("¿Seguro que deseas eliminar este contacto?")) return;
+        await delete_contact(id);
+    };
 
     useEffect(() => {
         get_list_user(dispatch) //esta llamada a la API funciona correctamente.
     }, []);
+
+    console.log(store.contacts);
 
     return (
         <>
@@ -32,12 +37,12 @@ export const ContactCard = () => {
                                 <div className="col-md-2 my-2">
                                     <div className="ratio ratio-1x1">
                                         <img
-                                            src="/src/assets/img/IMG_0903.JPG"
-                                            className="rounded-circle"
+                                            src="./src/assets/img/car.ecd_qr.png"
+                                            className="rounded"
                                             style={{
-                                                backgroundPosition: "center",
-                                                backgroundSize: "cover",
                                                 backgroundRepeat: "no-repeat",
+                                                objectFit: "cover",
+                                                objectPosition: "top"
                                             }}
                                         />
                                     </div>
@@ -65,7 +70,7 @@ export const ContactCard = () => {
                                     </button>
                                     <button
                                         className="btn btn-border-none"
-                                        // onClick={() => handleDelete(contacto.id)}
+                                        onClick={() => handleDelete(contacto.id)}
                                     >
                                         <i className="fa-solid fa-trash-can"></i>
                                     </button>
