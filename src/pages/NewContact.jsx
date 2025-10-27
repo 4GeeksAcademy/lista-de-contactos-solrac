@@ -19,7 +19,7 @@ export const NewContact = () => {
     const hadlesubmit = async (e) => {
         e.preventDefault()
         await create_contact(new_contact, setNew_Contact, dispatch)
-        navigate("/contact_card")
+        navigate("/")
 
     }
 
@@ -83,7 +83,7 @@ export const NewContact = () => {
                     </div>
                 </form>
             </div>
-            <Link className="d-flex justify-content-center" to={"/contact_card"}>Volver a lista de contacto</Link>
+            <Link className="d-flex justify-content-center" to={"/"}>Volver a lista de contacto</Link>
         </>
     )
 };

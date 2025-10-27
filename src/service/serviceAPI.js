@@ -85,16 +85,57 @@ export const delete_contact = async (id) => {
         method: "DELETE"
     });
 
-    const data = await response.json()
 
     if (!response.ok) {
-        console.error("Error al eliminar contacto:", data.msg);
-        return { status: response.status, msg: data.msg };
+        console.error("Error al eliminar contacto:");
+        return { status: response.status };
     }
 
+    if (response.ok) {
+        console.log("Contacto eliminado correctamente.");
+    }
 
-    return { msg: "Contacto eliminado correctamente." };
 
 }
 
 // // //----------------------------------------------------------------------------------------------------------------------
+// Llamada a la API para conseguir agenda única.
+
+export const get_agenda_unica = async () => {
+    const response = await fetch("https://playground.4geeks.com/contact/agendas/carlos")
+
+    if (!response.ok) {
+        console.log("Error con la API");
+        create_agenda();
+        return;
+    }
+
+    const data = await response.json();
+
+    if (response.ok) {
+        return data;
+    }
+
+}
+
+// // //----------------------------------------------------------------------------------------------------------------------
+export const create_agenda = async () => {
+    const response = await fetch("https://playground.4geeks.com/contact/agendas/carlos", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify("carlos")
+    });
+
+    if(!response.ok){
+        console.log("NO es posible crear agenda.");
+        return;
+    }
+
+    const data = await response.json();
+    if(response.ok){
+        console.log("Agenda creada");
+        return data;
+    }
+}
