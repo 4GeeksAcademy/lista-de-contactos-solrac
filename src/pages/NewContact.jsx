@@ -6,7 +6,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 export const NewContact = () => {
 
     const navigate = useNavigate()
-    const {store , dispatch} = useGlobalReducer()
+    const { store, dispatch } = useGlobalReducer()
 
 
     const [new_contact, setNew_Contact] = useState({
@@ -35,9 +35,6 @@ export const NewContact = () => {
     return (
         <>
             <div className="registration form container mt-5" style={{ width: "800px", height: "500px" }}>
-                <div className="tittle text-center display-1 m-5">
-                    <h1><strong>Añadir nuevo contacto</strong></h1>
-                </div>
                 <form onSubmit={hadlesubmit}>
                     <label className="form-label mb-2" htmlFor="fullname">Nombre y apellidos</label>
                     <input

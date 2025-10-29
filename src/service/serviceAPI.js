@@ -80,7 +80,7 @@ export const edit_contacts = async (id, new_contact, setNew_contact, dispatch) =
 }
 // // //----------------------------------------------------------------------------------------------------------------------
 
-export const delete_contact = async (id) => {
+export const delete_contact = async (id, dispatch, navigate) => {
     const response = await fetch(`https://playground.4geeks.com/contact/agendas/carlos/contacts/${id}`, {
         method: "DELETE"
     });
@@ -93,6 +93,8 @@ export const delete_contact = async (id) => {
 
     if (response.ok) {
         console.log("Contacto eliminado correctamente.");
+        get_list_user(dispatch)
+        navigate("/")
     }
 
 

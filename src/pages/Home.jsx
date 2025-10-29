@@ -20,11 +20,6 @@ export const Home = () => {
 		<>
 			<div className="contact-list container-fluid my-5">
 				<div className="row">
-					<div className="d-flex justify-content-end mb-3">
-						<button className="btn btn-success" onClick={() => navigate("/new_contact")}>
-							Añadir contacto
-						</button>
-					</div>
 					<div className="col">
 						<ContactCard />
 					</div>

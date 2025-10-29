@@ -11,7 +11,7 @@ export const ContactCard = () => {
     const handleDelete = async (id) => {
 
         if (!confirm("¿Seguro que deseas eliminar este contacto?")) return;
-        await delete_contact(id);
+        await delete_contact(id, dispatch, navigate);
         
     };
 
